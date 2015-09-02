@@ -21,9 +21,8 @@ int main()
 	
 	if (!source.data)
 		return 0;
-	
+
 	GpuMat g_source;
-	
 	g_source.upload(source,stream);
 	
 	GpuMat lapalaceImage;
@@ -33,12 +32,12 @@ int main()
 	bilateralImage.create(g_source.size(), g_source.type());
 	//Í¼ÏñÈñ»¯
 	
-	double start_time = (double)getTickCount();
+	
 	lapalace(g_source, lapalaceImage);
-	double during = ((double)getTickCount() - start_time) / getTickFrequency();
-
+	
+	double start_time = (double)getTickCount();
 	cv::cuda::bilateralFilter(lapalaceImage, bilateralImage, 9, 40.0, 2.0, 4);
-
+	double during = ((double)getTickCount() - start_time) / getTickFrequency();
 	Mat dst_image;
 	bilateralImage.download(dst_image);
 	
